@@ -7,6 +7,8 @@
 		<result column="password" property="password"
 			jdbcType="VARCHAR" />
 		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="headImg" property="headImg" jdbcType="VARCHAR" />
+		<result column="vip" property="vip" jdbcType="INT" />
 	</resultMap>
 
 	<select id="selectAll" resultMap="BaseResultMap">
@@ -15,19 +17,10 @@
 
 	<insert id="insertUser" parameterType="org.lwj.vo.UserVo">
 		INSERT
-		userinfo(id,name,password,mobile)
+		userinfo(id,name,password,mobile,headImg,vip)
 		VALUES
 		(#{id},#{name},#{password},#{mobile})
 	</insert>
-
-	<select id="checkMobile" parameterType="java.lang.String"
-		resultType="java.lang.Integer">
-		SELECT
-		count(*)
-		FROM userinfo
-		WHERE
-		userinfo.mobile = #{mobile}
-	</select>
 
 	<select id="checkMobile" resultType="java.lang.Integer">
 		SELECT

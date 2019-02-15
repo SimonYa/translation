@@ -17,6 +17,10 @@ public class UserVo implements Serializable {
 
 	private String mobile;
 
+	private String headImg;
+
+	private Integer vip;
+
 	public String getId() {
 		return id;
 	}
@@ -47,6 +51,22 @@ public class UserVo implements Serializable {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+
+	public String getHeadImg() {
+		return headImg;
+	}
+
+	public void setHeadImg(String headImg) {
+		this.headImg = headImg;
+	}
+
+	public Integer getVip() {
+		return vip;
+	}
+
+	public void setVip(Integer vip) {
+		this.vip = vip;
 	}
 
 }
