@@ -8,16 +8,23 @@
 			jdbcType="VARCHAR" />
 		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
 		<result column="headImg" property="headImg" jdbcType="VARCHAR" />
-		<result column="vip" property="vip" jdbcType="INT" />
+		<result column="vip" property="vip" jdbcType="INTEGER" />
 	</resultMap>
 
 	<select id="selectAll" resultMap="BaseResultMap">
 		SELECT * FROM userinfo
 	</select>
 
+	<select id="selectUser" resultMap="BaseResultMap">
+		SELECT * 
+		FROM userinfo 
+		WHERE
+		mobile=#{mobile}
+	</select>
+
 	<insert id="insertUser" parameterType="org.lwj.vo.UserVo">
 		INSERT
-		userinfo(id,name,password,mobile,headImg,vip)
+		userinfo(id,name,password,mobile)
 		VALUES
 		(#{id},#{name},#{password},#{mobile})
 	</insert>
@@ -39,4 +46,14 @@
 		AND
 		userinfo.password = #{password}
 	</select>
+
+	<update id="updatePassword"
+		parameterType="org.lwj.vo.UpdatePassVo">
+		UPDATE
+		userinfo
+		SET
+		password=#{password}
+		WHERE
+		mobile=#{mobile}
+	</update>
 </mapper>

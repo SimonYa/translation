@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.lwj.mapper.UserMapper;
 import org.lwj.service.UserService;
+import org.lwj.vo.UpdatePassVo;
 import org.lwj.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,17 @@ public class UserServiceImpl implements UserService {
 	public int login(String mobile, String password) {
 		// TODO Auto-generated method stub
 		return userMapper.login(mobile, password);
+	}
+
+	@Override
+	public int updatePassword(UpdatePassVo updatePassVo) {
+		// TODO Auto-generated method stub
+		return userMapper.updatePassword(updatePassVo);
+	}
+
+	@Override
+	public UserVo selectUser(String mobile) {
+		// TODO Auto-generated method stub
+		return userMapper.selectUser(mobile);
 	}
 }
