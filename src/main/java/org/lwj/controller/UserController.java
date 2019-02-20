@@ -48,6 +48,7 @@ public class UserController {
 	private UserService userService;
 
 	private static String verifyCode = "";
+	private static String verifyMobile = "";
 
 	// 查询全部
 	@GetMapping("/selectAll")
@@ -66,7 +67,8 @@ public class UserController {
 		UserVo userVo;
 		if (insertUserVo != null) {
 			userVo = new UserVo();
-			if (verifyCode == null || verifyCode.length() == 0 || !verifyCode.equals(insertUserVo.getValidateCode())) {
+			if (verifyCode == null || verifyCode.length() == 0 || !verifyCode.equals(insertUserVo.getValidateCode())
+					|| !verifyMobile.equals(insertUserVo.getMobile())) {
 				response.setCode("600");
 				response.setMessage("验证码不正确");
 				return response;
@@ -84,11 +86,13 @@ public class UserController {
 		String id = UUID.randomUUID().toString();
 		userVo.setId(id);
 		int num = userService.insertUser(userVo);
+		userVo.setHeadImg(
+				"http://bhms-fru-dev.oss-cn-shenzhen.aliyuncs.com/images/8c5a89ce668440f9b25fce8337f704c8.png");
+		userVo.setVip(0);
 		if (num > 0) {
-			// 重置验证码
-			verifyCode = "";
 			response.setCode("200");
 			response.setMessage("ok");
+			response.setData(userVo);
 		} else {
 			response.setCode("600");
 			response.setMessage("注册失败");
@@ -172,7 +176,7 @@ public class UserController {
 	public Response captcha(String mobile)
 			throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
 		Response response = new Response();
-
+		verifyMobile = mobile;
 		// 云市场分配的密钥Id
 		String secretId = "AKIDGq7dtE5JnHjG2Gxi7mMrt7WQqxlg3bEkO6f0";
 		// 云市场分配的密钥Key
@@ -291,15 +295,14 @@ public class UserController {
 	public Response updatePassword(@RequestBody UpdatePassVo updatePassVo) {
 		Response response = new Response();
 		if (updatePassVo != null) {
-			if (verifyCode == null || verifyCode.length() == 0 || !verifyCode.equals(updatePassVo.getValidateCode())) {
+			if (verifyCode == null || verifyCode.length() == 0 || !verifyCode.equals(updatePassVo.getValidateCode())
+					|| !verifyMobile.equals(updatePassVo.getMobile())) {
 				response.setCode("600");
 				response.setMessage("验证码不正确");
 				return response;
 			}
 			int num = userService.updatePassword(updatePassVo);
 			if (num > 0) {
-				// 重置验证码
-				verifyCode = "";
 				response.setCode("200");
 				response.setMessage("ok");
 			} else {
